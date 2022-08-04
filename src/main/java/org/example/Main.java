@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.models.Capital;
+import org.example.models.Country;
+
 import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
@@ -13,6 +16,26 @@ public class Main {
 
         // access transaction object
         EntityTransaction transaction = entityManager.getTransaction();
+
+        Country newCountry = new Country();
+        newCountry.setName("USA");
+
+        Capital newCapital = new Capital();
+        newCapital.setName("Washington DC");
+
+        // Set Country-capital association
+        newCountry.setCapital(newCapital);
+
+
+        transaction.begin();
+        entityManager.persist(newCountry);
+//        transaction.commit();
+//
+//        transaction.begin();
+        entityManager.persist(newCapital);
+        transaction.commit();
+
+
 
         // close entity manager
         entityManager.close();
